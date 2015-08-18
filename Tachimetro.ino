@@ -95,9 +95,11 @@ void analog_speed () {
     an_speed = 20;
   }
   for (int i = 0; i < an_speed/5; i++) {
-        lcd.write(5);
+        lcd.print(char(4));
       }
-      lcd.write( ( an_speed % 5 ) );
+     if (an_speed < 20){
+      lcd.print( char( an_speed % 5 ) );
+      }
     }
 
 
@@ -120,7 +122,7 @@ void Round(int page) {  //funzione che alla pressione del tasto sul pin button c
           timer = (millis() - time_start) / 1000;
         }
         Refresh_Chronometer();
-        //analog_speed();
+        analog_speed();
         break;
       }
   }
@@ -148,7 +150,7 @@ void Refresh(int page) { //funzione che aggiorna i valori visualizzati sulla pag
         lcd.setCursor(4, 0);
         lcd.print(Km);
         Refresh_Chronometer();
-        //analog_speed();
+        analog_speed();
         break;
       }
   }
@@ -202,19 +204,13 @@ void setup() {
   pinMode(button, INPUT);
   pinMode (menu, INPUT);
   lcd.begin(16, 2);
-  lcd.createChar(0, (uint8_t *)matrix[0]);
- // lcd.createChar(2, two);
- // lcd.createChar(3, three);
- // lcd.createChar(4, four);
-  //lcd.createChar(5, five); 
-  
-  //lcd.print("Ciao Elia,");
+  for (int i = 0 ; i <= 4 ; i++){
+  lcd.createChar(i, (uint8_t *)matrix[i]);
+  }
+  lcd.print("Ciao Elia,");
   lcd.setCursor(0, 1);
-  //lcd.print("Buona corsa! :)");
-  int i = 0;
-  lcd.print(char(i));
-
-  delay(10000);
+  lcd.print("Buona corsa! :)");
+  delay(1000);
   Round(page);
 }
 
